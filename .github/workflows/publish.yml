@@ -3,11 +3,11 @@ name: Publish to PyPI
 on:
   push:
     branches:
-      - main  # Adjust if your default branch is different
+      - main
 
 jobs:
   publish:
-    name: Publish Python Package
+    name: Bump Version and Publish
     runs-on: ubuntu-latest
 
     steps:
@@ -17,12 +17,16 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: "3.9"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install build twine
+          pip install build twine bump2version
+
+      - name: Bump version
+        run: |
+          bump2version patch
 
       - name: Build package
         run: |
@@ -34,3 +38,9 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
           python -m twine upload dist/*
+
+      - name: Push changes back to repository
+        uses: ad-m/github-push-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main

@@ -2,14 +2,14 @@ import json
 from anygen.anygen import AnyGen
 
 def test_anygen():
-    prompt = "Once upon a time, in a land far away"
+    prompt = "Write a Python function to calculate the factorial of a number."
 
     # Test Hugging Face Model
-    # print("Testing Hugging Face Model...")
-    # hf_model_name = "meta-llama/Llama-3.2-1B-Instruct"  # Replace with your Hugging Face model
-    # hf_generator = AnyGen(model_type="huggingface", model_name_or_path=hf_model_name, device="cpu")
-    # hf_output = hf_generator.generate(prompt, parameters=None)
-    # print("Hugging Face Output:", hf_output)
+    print("Testing Hugging Face Model...")
+    hf_model_name = "meta-llama/Llama-3.2-1B-Instruct"  # Replace with your Hugging Face model
+    hf_generator = AnyGen(model_type="huggingface", model_name_or_path=hf_model_name, device="cpu")
+    hf_output = hf_generator.generate(prompt, parameters=None)
+    print("Hugging Face Output:", hf_output)
 
     # Test OpenAI Model
     print("Testing OpenAI Model...")

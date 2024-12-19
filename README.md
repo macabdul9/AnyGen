@@ -9,7 +9,22 @@
 - Easy-to-use interface for text generation
 
 ## Installation
-Ensure you have the required libraries installed:
+### Using `pip`
+You can install `AnyGen` from PyPI:
+```bash
+pip install -U anygen
+```
+
+### From Source
+Clone the repository and install it manually:
+```bash
+git clone https://github.com/macabdul9/AnyGen.git
+cd AnyGen
+pip install .
+```
+
+### Requirements
+Ensure the following libraries are installed:
 ```bash
 pip install transformers google-generativeai requests openai
 ```
@@ -81,7 +96,7 @@ Both OpenAI and Gemini models require an API key stored in a JSON file. Below is
 `openai_keys.json`:
 ```json
 {
-    "gpt-4o-miini": {
+    "gpt-4o-mini": {
         "api_key": "your-openai-api-key",
         "endpoint": "your_endpoint"
     }
@@ -105,7 +120,7 @@ Both OpenAI and Gemini models require an API key stored in a JSON file. Below is
 - `beam_size`: The number of beams to use for beam search.
 
 ## Contributions
-Feel free to submit issues or contribute to this repository!
+Feel free to submit issues and/or contribute to this repository!
 
 ## License
 This project is licensed under the MIT License.
