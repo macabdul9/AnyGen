@@ -33,7 +33,7 @@ class AnyGen:
         genai.configure(api_key=credentials[model_name]["api_key"])
         return genai.GenerativeModel(model_name)
 
-    def generate(self, prompt, parameters):
+    def generate(self, prompt, parameters=None):
         if self.model_type in ["huggingface", "hf"]:
             return self._generate_from_huggingface(prompt, parameters)
         elif self.model_type == "openai":
@@ -44,34 +44,41 @@ class AnyGen:
             raise ValueError(f"Unsupported model type: {self.model_type}")
 
     def _generate_from_huggingface(self, prompt, parameters):
-        return self.model(
-            prompt, 
-            return_full_text=False, 
-            temperature=parameters.get("temperature", 0.7), 
-            max_new_tokens=parameters.get("max_tokens", 200)
-        )[0]["generated_text"]
+        kwargs = {}
+        if parameters:
+            kwargs.update({
+                "return_full_text": False,
+                "temperature": parameters.get("temperature"),
+                "max_new_tokens": parameters.get("max_tokens")
+            })
+        return self.model(prompt, **{k: v for k, v in kwargs.items() if v is not None})[0]["generated_text"]
 
     def _generate_from_openai(self, prompt, parameters):
         model = list(self.credentials.keys())[0]
-        headers = {
-            "Content-Type": "application/json",
-            "api-key": self.credentials[model].get("api_key", self.credentials[model]["api_key"])
-        }
         payload = {
             "model": parameters.get("model", "gpt-4"),
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": parameters.get("temperature", 0.7),
-            "max_tokens": parameters.get("max_tokens", 200)
+            "messages": [{"role": "user", "content": prompt}]
+        }
+        if parameters:
+            payload.update({
+                "temperature": parameters.get("temperature"),
+                "max_tokens": parameters.get("max_tokens")
+            })
+        headers = {
+            "Content-Type": "application/json",
+            "api-key": self.credentials[model]["api_key"]
         }
         response = requests.post(self.credentials[model]["endpoint"], headers=headers, json=payload)
         response.raise_for_status()
         return response.json()['choices'][0]['message']['content']
 
     def _generate_from_gemini(self, prompt, parameters):
-        generation_config = {
-            "temperature": parameters.get("temperature", 0.7),
-            "max_output_tokens": parameters.get("max_tokens", 200)
-        }
-        response = self.model.generate_content(prompt, generation_config=generation_config)
+        generation_config = {}
+        if parameters:
+            generation_config.update({
+                "temperature": parameters.get("temperature"),
+                "max_output_tokens": parameters.get("max_tokens")
+            })
+        response = self.model.generate_content(prompt, generation_config={k: v for k, v in generation_config.items() if v is not None})
         time.sleep(6)  # Avoid rate limiting
         return response.text

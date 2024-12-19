@@ -2,7 +2,6 @@
 
 `AnyGen` is a minimal Python library that unifies text generation tasks using Hugging Face, OpenAI, and Gemini models. It offers a minimalistic and unified pipeline for loading models and generating outputs with ease and efficiency.
 
-
 ## Features
 - Support for Hugging Face models
 - Support for OpenAI's GPT models
@@ -29,8 +28,7 @@ hf_generator = AnyGen(model_type="huggingface", model_name_or_path=model_name_or
 
 # Generate text
 prompt = "Write python code for binary search"
-parameters = {"temperature": 0.7, "max_tokens": 100}
-generated_text = hf_generator.generate(prompt, parameters)
+generated_text = hf_generator.generate(prompt)
 print(generated_text)
 ```
 
@@ -44,8 +42,7 @@ openai_generator = AnyGen(model_type="openai", api_key_fp=api_key_fp)
 
 # Generate text
 prompt = "Write python code for binary search"
-parameters = {"temperature": 0.7, "max_tokens": 100, "model": "gpt-4"}
-generated_text = openai_generator.generate(prompt, parameters)
+generated_text = openai_generator.generate(prompt)
 print(generated_text)
 ```
 
@@ -59,8 +56,22 @@ gemini_generator = AnyGen(model_type="gemini", api_key_fp=api_key_fp)
 
 # Generate text
 prompt = "Write python code for binary search"
-parameters = {"temperature": 0.7, "max_tokens": 100}
-generated_text = gemini_generator.generate(prompt, parameters)
+generated_text = gemini_generator.generate(prompt)
+print(generated_text)
+```
+
+### Example with Parameters
+```python
+from anygen import AnyGen
+
+# Initialize the generator
+api_key_fp = "openai_keys.json"  # Example for OpenAI
+openai_generator = AnyGen(model_type="openai", api_key_fp=api_key_fp)
+
+# Generate text with parameters
+prompt = "Write python code for binary search"
+parameters = {"temperature": 0.7, "max_tokens": 100, "model": "gpt-4"}
+generated_text = openai_generator.generate(prompt, parameters)
 print(generated_text)
 ```
 
@@ -89,7 +100,9 @@ Both OpenAI and Gemini models require an API key stored in a JSON file. Below is
 ## Parameters
 - `temperature`: Controls the randomness of the output. Higher values produce more random results.
 - `max_tokens`: The maximum number of tokens to generate.
-- `model`: (OpenAI-specific) Specifies the model to use (e.g., `gpt-4`).
+- `top_p`: The cumulative probability of the top tokens to sample from.
+- `top_k`: The number of highest probability vocabulary tokens to keep for top-k-filtering.
+- `beam_size`: The number of beams to use for beam search.
 
 ## Contributions
 Feel free to submit issues or contribute to this repository!
