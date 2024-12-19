@@ -70,7 +70,7 @@ openai_generator = AnyGen(model_type="openai", api_key_fp=api_key_fp)
 
 # Generate text with parameters
 prompt = "Write python code for binary search"
-parameters = {"temperature": 0.7, "max_tokens": 100, "model": "gpt-4"}
+parameters = {"temperature": 0.7, "max_tokens": 512}
 generated_text = openai_generator.generate(prompt, parameters)
 print(generated_text)
 ```
