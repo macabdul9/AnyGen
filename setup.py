@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="anygen",
-    version="1.0.0",
+    version="1.0.1",
     author="Abdul Waheed",
     author_email="abdulwaheed1513@gmail.com",
     description="A unified interface for text generation using Hugging Face, OpenAI, and Gemini models.",
