@@ -96,21 +96,23 @@ Both OpenAI and Gemini models require an API key stored in a JSON file. Below is
 `openai_keys.json`:
 ```json
 {
-    "gpt-4o-mini": {
-        "api_key": "your-openai-api-key",
+    "openai_model_name": {
+        "api_key": "your_openai_api_key",
         "endpoint": "your_endpoint"
     }
 }
 ```
+Replace `openai_model_name` with the OpenAI model name (e.g., `gpt-4o-mini`), `api_key` with your API key, and `your_endpoint` with the provided endpoint URL.
 
 `gemini_keys.json`:
 ```json
 {
-    "gemini-model-name": {
-        "api_key": "your-gemini-api-key"
+    "gemini_model_name": {
+        "api_key": "your_gemini_api_key"
     }
 }
 ```
+Replace `gemini_model_name` with the [Gemini](https://aistudio.google.com/) model name (e.g., `gemini-2.0-flash-exp`), `api_key` with your Gemini API key.
 
 ## Parameters
 - `temperature`: Controls the randomness of the output. Higher values produce more random results.
@@ -137,5 +139,6 @@ If you use `AnyGen` in your research or work, please cite it using the following
   year = {2024},
   publisher = {GitHub},
   url = {https://github.com/macabdul9/AnyGen},
-  version = {1.0.1}
+  doi = {https://doi.org/10.5281/zenodo.14533072}
 }
+```
