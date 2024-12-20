@@ -4,11 +4,17 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'  # Ignore changes to markdown files like README.md
+    # Skip builds for commits with specific messages
+  workflow_dispatch:  # Allow manual triggering of the workflow if needed
 
 jobs:
   publish:
     name: Bump Version and Publish
     runs-on: ubuntu-latest
+
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"  # Skip runs if commit message contains '[skip ci]'
 
     steps:
       - name: Checkout code

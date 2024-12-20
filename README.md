@@ -124,3 +124,18 @@ Feel free to submit issues and/or contribute to this repository!
 
 ## License
 This project is licensed under the MIT License.
+
+
+## Cite this Work
+
+If you use `AnyGen` in your research or work, please cite it using the following BibTeX entry:
+
+```bibtex
+@software{anygen,
+  author = {Abdul Waheed},
+  title = {AnyGen: A Unified Interface for Text Generation},
+  year = {2024},
+  publisher = {GitHub},
+  url = {https://github.com/macabdul9/AnyGen},
+  version = {1.0.1}
+}
