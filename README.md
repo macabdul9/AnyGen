@@ -121,6 +121,23 @@ Replace `gemini_model_name` with the [Gemini](https://aistudio.google.com/) mode
 - `top_k`: The number of highest probability vocabulary tokens to keep for top-k-filtering.
 - `beam_size`: The number of beams to use for beam search.
 
+## Running Tests
+You can run the tests using the following commands. 
+1. Clone the repository:
+```bash
+git clone git@github.com:macabdul9/AnyGen.git
+cd AnyGen
+```
+2. Install the requirements:
+```bash
+pip install -r requirements.txt
+```
+3. Run the tests:
+```bash
+python -m tests.test_anygen
+```
+
+
 ## Contributions
 Feel free to submit issues and/or contribute to this repository!
 
