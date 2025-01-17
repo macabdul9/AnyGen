@@ -169,5 +169,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-gemini_keys.json
-openai_keys.json
+keys/gemini_keys.json
+keys/openai_keys.json
+keys/deepseek_keys.json
+keys
