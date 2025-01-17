@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 gemini_keys.json
 openai_keys.json
+
+keys

@@ -14,17 +14,24 @@ def test_anygen():
 
     # Test OpenAI Model
     print("Testing OpenAI Model...")
-    openai_api_key_fp = "openai_keys.json"  # Path to OpenAI API credentials
+    openai_api_key_fp = "keys/openai_keys.json"  # Path to OpenAI API credentials
     openai_generator = AnyGen(model_type="openai", api_key_fp=openai_api_key_fp)
-    openai_output = openai_generator.generate(prompt, parameters=None)
+    openai_output = openai_generator.generate(prompt, parameters={"max_tokens": 512, "temperature": 0.7})
     print("OpenAI Output:", openai_output)
 
-    # # Test Gemini Model
+    # Test Gemini Model
     print("Testing Gemini Model...")
-    gemini_api_key_fp = "gemini_keys.json"  # Path to Gemini API credentials
+    gemini_api_key_fp = "keys/gemini_keys.json"  # Path to Gemini API credentials
     gemini_generator = AnyGen(model_type="gemini", api_key_fp=gemini_api_key_fp)
-    gemini_output = gemini_generator.generate(prompt, parameters=None)
+    gemini_output = gemini_generator.generate(prompt, parameters={"max_tokens": 512, "temperature": 0.7})
     print("Gemini Output:", gemini_output)
+
+    # # Test DeepSeek Model
+    # print("Testing DeepSeek Model...")
+    # deepseek_api_key_fp = "keys/deepseek_keys.json"  # Path to DeepSeek API credentials
+    # deepseek_generator = AnyGen(model_type="deepseek", api_key_fp=deepseek_api_key_fp)
+    # deepseek_output = deepseek_generator.generate(prompt, parameters={"max_tokens": 512, "temperature": 0.7})
+    # print("DeepSeek Output:", deepseek_output)
 
 if __name__ == "__main__":
     test_anygen()

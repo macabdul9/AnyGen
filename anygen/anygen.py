@@ -30,23 +30,25 @@ class AnyGen:
         return self._load_huggingface_model(model_name_or_path, device)
 
     def _load_gemini_model(self, api_key_fp):
-        
         credentials = self._load_credentials(api_key_fp)
         model_name = list(credentials.keys())[0]
         genai.configure(api_key=credentials[model_name]["api_key"])
         return genai.GenerativeModel(model_name)
     
     def _load_openai_model(self, api_key_fp):
-        return self._load_credentials(api_key_fp) # this laods the api key
+        return self._load_credentials(api_key_fp) # this loads the API key
+
+    def _load_deepseek_model(self, api_key_fp):
+        return self._load_credentials(api_key_fp)  # Load DeepSeek credentials
 
     def _generate_from_huggingface(self, prompt, parameters):
         
         max_new_tokens = parameters.get("max_tokens", 512)
         del parameters["max_tokens"]
         
-        generated_text =  self.model(
+        generated_text = self.model(
             prompt,
-            return_full_text=False, # return generated tokens only 
+            return_full_text=False,  # return generated tokens only 
             max_new_tokens=max_new_tokens, 
             **parameters
             
@@ -64,8 +66,8 @@ class AnyGen:
         }
         if parameters:
             payload.update({
-                "temperature": parameters.get("temperature"),
-                "max_tokens": parameters.get("max_tokens")
+                "temperature": parameters.get("temperature", 0.7),
+                "max_tokens": parameters.get("max_tokens", 512)
             })
         headers = {
             "Content-Type": "application/json",
@@ -81,11 +83,34 @@ class AnyGen:
         if parameters:
             generation_config.update({
                 "temperature": parameters.get("temperature"),
-                "max_output_tokens": parameters.get("max_tokens")
+                "max_output_tokens": parameters.get("max_tokens", 512)
             })
         response = self.model.generate_content(prompt, generation_config={k: v for k, v in generation_config.items() if v is not None})
         time.sleep(6)  # Avoid rate limiting
         return response.text
+
+    def _generate_from_deepseek(self, prompt, parameters):
+        model_id = list(self.model.keys())[0]
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.model[model_id]['api_key']}"
+        }
+        payload = {
+            "model": model_id,
+            "messages": [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            "stream": False
+        }
+        if parameters:
+            payload.update({
+                "temperature": parameters.get("temperature"),
+                "max_tokens": parameters.get("max_tokens")
+            })
+        response = requests.post(self.model[model_id]['endpoint'], headers=headers, json=payload)
+        response.raise_for_status()
+        return response.json()['choices'][0]['message']['content']
 
     def generate(self, prompt, parameters=None):
         
