@@ -7,8 +7,9 @@ def test_anygen():
     # Test Hugging Face Model
     print("Testing Hugging Face Model...")
     hf_model_name = "meta-llama/Llama-3.2-1B-Instruct"  # Replace with your Hugging Face model
-    hf_generator = AnyGen(model_type="huggingface", model_name_or_path=hf_model_name, device="cpu")
-    hf_output = hf_generator.generate(prompt, parameters=None)
+    device = "cuda"  # Use "cpu" if you don't have a GPU
+    hf_generator = AnyGen(model_type="huggingface", model_name_or_path=hf_model_name, device=device)
+    hf_output = hf_generator.generate(prompt, parameters={"max_tokens": 1024})
     print("Hugging Face Output:", hf_output)
 
     # Test OpenAI Model
@@ -18,7 +19,7 @@ def test_anygen():
     openai_output = openai_generator.generate(prompt, parameters=None)
     print("OpenAI Output:", openai_output)
 
-    # Test Gemini Model
+    # # Test Gemini Model
     print("Testing Gemini Model...")
     gemini_api_key_fp = "gemini_keys.json"  # Path to Gemini API credentials
     gemini_generator = AnyGen(model_type="gemini", api_key_fp=gemini_api_key_fp)
