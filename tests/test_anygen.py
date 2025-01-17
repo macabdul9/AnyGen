@@ -26,12 +26,6 @@ def test_anygen():
     gemini_output = gemini_generator.generate(prompt, parameters={"max_tokens": 512, "temperature": 0.7})
     print("Gemini Output:", gemini_output)
 
-    # # Test DeepSeek Model
-    # print("Testing DeepSeek Model...")
-    # deepseek_api_key_fp = "keys/deepseek_keys.json"  # Path to DeepSeek API credentials
-    # deepseek_generator = AnyGen(model_type="deepseek", api_key_fp=deepseek_api_key_fp)
-    # deepseek_output = deepseek_generator.generate(prompt, parameters={"max_tokens": 512, "temperature": 0.7})
-    # print("DeepSeek Output:", deepseek_output)
 
 if __name__ == "__main__":
     test_anygen()
