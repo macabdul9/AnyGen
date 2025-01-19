@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "AnyGen: A Unified Interface for Text Generation"
+authors:
+  - family-names: "Waheed"
+    given-names: "Abdul"
+date-released: 2024-01-01
+repository-code: "https://github.com/macabdul9/AnyGen"
+doi: "10.5281/zenodo.14533072"
+license: "MIT"
+keywords:
+  - text generation
+  - unified interface
+  - natural language processing
+  - machine learning
